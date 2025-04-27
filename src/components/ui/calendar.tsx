@@ -1,28 +1,18 @@
+"use client"
+
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker, DayPickerProps } from "react-day-picker"
+import { DayPicker } from "react-day-picker"
+
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-
-// Custom type for the components prop
-type CustomDayPickerComponents = {
-  IconLeft: React.ComponentType<{ className?: string }>;
-  IconRight: React.ComponentType<{ className?: string }>;
-};
-
-type CalendarProps = DayPickerProps & {
-  classNames?: Record<string, string>;
-  showOutsideDays?: boolean;
-  components?: Partial<CustomDayPickerComponents>;
-};
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  components = {},
   ...props
-}: CalendarProps) {
+}: React.ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -70,17 +60,16 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }: { className?: string }) => (
+        IconLeft: ({ className, ...props }) => (
           <ChevronLeft className={cn("size-4", className)} {...props} />
         ),
-        IconRight: ({ className, ...props }: { className?: string }) => (
+        IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn("size-4", className)} {...props} />
         ),
-        ...components, // Allow overriding the default icons
       }}
       {...props}
     />
-  );
+  )
 }
 
-export { Calendar };
+export { Calendar }
